@@ -6,7 +6,7 @@ class Frame:
     def __init__(self, index):
         self.index = index
         self.page_number = uuid4()
-        self.pin_count = uuid4()
+        self.pin_count = 0
         self.dirty = False
         self.state = 0
 
