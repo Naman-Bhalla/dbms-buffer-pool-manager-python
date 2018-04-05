@@ -1,4 +1,3 @@
-from src.frame import Frame
 from src.lru_replacer import LRUReplacer
 from src.page import Page
 from src.disk_manager import DiskManager
@@ -7,12 +6,10 @@ from src.disk_manager import DiskManager
 class BufferPoolManager:
 
     def __init__(self, no_of_pages):
-        self.frame_table = []
         self.buffer_pool = []
         self.disk_manager = DiskManager(64)
 
         for i in range(no_of_pages):
-            self.frame_table[i] = Frame(i)
             self.buffer_pool[i] = Page(i, 64)  # Setting default page size to 64
 
         self.replacer = LRUReplacer(self)
@@ -23,7 +20,7 @@ class BufferPoolManager:
         return self.no_of_pages
 
     def getFrameTable(self):
-        return self.frame_table
+        return self.buffer_pool
 
     def newPage(self):
         page = self.disk_manager.allocatePage()
