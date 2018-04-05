@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class Replacer(ABC):
     def __init__(self):
         pass
