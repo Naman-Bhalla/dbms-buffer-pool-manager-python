@@ -8,7 +8,7 @@ class Frame:
         self.page_number = uuid4()
         self.pin_count = 0
         self.dirty = False
-        self.state = 0
+        self.state = -1
 
     def is_dirty(self):
         return self.dirty
