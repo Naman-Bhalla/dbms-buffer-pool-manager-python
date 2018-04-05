@@ -10,7 +10,7 @@ class Replacer(ABC):
         pass
 
     @abstractmethod
-    def victim(self, frame):
+    def victim(self):
         pass
 
     @abstractmethod

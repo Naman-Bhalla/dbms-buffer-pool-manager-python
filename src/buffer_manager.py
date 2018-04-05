@@ -37,7 +37,7 @@ class BufferPoolManager:
                 return pages
 
         # Page not in buffer pool
-        page = self.replacer.victim(self.buffer_pool)
+        page = self.replacer.victim()
 
         if page.is_dirty():
             self.disk_manager.writePage(page)  # Page is dirty
@@ -51,7 +51,8 @@ class BufferPoolManager:
                 if is_dirty:
                     pages.dirty = True
                 if pages.pin_count == 0:
-            # TODO: Put into LRU Cache
+                    self.replacer.frame_table.append(pages)
+                return True
         return False
 
     def flushPage(self, page_id):

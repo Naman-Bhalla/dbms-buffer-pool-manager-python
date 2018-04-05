@@ -16,23 +16,30 @@ class LRUReplacer(Replacer):
 
         self.head = -1
 
-    def insert(self, frame):
-        pass
+    def insert(self, page):
+        page.state = self.REFERENCED
 
-    def victim(self, frame):
-        for i in range(2 * len(frame)):
-            self.head = (self.head + 1) % len(frame)
+    def victim(self):
+        if self.frame_table:
+            for i in range(2 * len(self.frame_table)):
+                self.head = (self.head + 1) % len(self.frame_table)
 
-            if self.frame_table[self.head].state == self.REFERENCED:
-                self.frame_table[self.head].state = self.AVAILABLE
+                if self.frame_table[self.head].state == self.REFERENCED:
+                    self.frame_table[self.head].state = self.AVAILABLE
 
-            elif self.frame_table[self.head].state == self.AVAILABLE:
-                return self.frame_table[self.head]
+                elif self.frame_table[self.head].state == self.AVAILABLE:
+                    return self.frame_table[self.head]
 
         return None
 
-    def erase(self, frame):
-        pass
+    def erase(self, page):
+        index = -1
+        for frames in self.frame_table:
+            index += 1
+            if frames.index == page.index:
+                self.frame_table.pop(index)
+                return True
+        return False
 
     def __len__(self):
         return self.no_of_buffers
